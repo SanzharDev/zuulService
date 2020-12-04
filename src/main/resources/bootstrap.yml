@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: myzuulservice
+  cloud:
+    config:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/news_db
+    username: root
+    password:

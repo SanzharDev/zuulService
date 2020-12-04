@@ -1,0 +1,40 @@
+server:
+  port: 5555
+
+#setting eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+
+#setting zuul
+zuul:
+  sensitiveHeaders: #let headers Authorization, Cookie, Set-Cookie be redirected with request
+  host:
+    connect-timeout-millis: 2000
+    socket-timeout-millis: 6000
+  prefix: /api
+  routes:
+    authentication-service: /auth/**
+    news-maker-service: /news/**
+    login-service: /login/**
+    user-service: /user/**
+    middleware:
+      path: /cart/**
+      url: http://localhost:8181/
+  ignored-services: '*'
+
+
+#Actuator contains the health indicators used by Eureka Server to determine the health of the service
+#By default Eureka server set the URL to the /info of the service to check the health
+management:
+  endpoints:
+    routes:
+      enbaled: true
+    web:
+      exposure:
+        include: '*'
